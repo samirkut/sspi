@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
+//go:build windows
 // +build windows
 
 package sspi
@@ -94,7 +95,8 @@ type CredHandle struct {
 //sys	FreeCredentialsHandle(handle *CredHandle) (ret syscall.Errno) = secur32.FreeCredentialsHandle
 
 const (
-	SECURITY_NATIVE_DREP = 16
+	SECURITY_NATIVE_DREP  = 16
+	SECURITY_NETWORK_DREP = 0
 
 	SECBUFFER_DATA           = 1
 	SECBUFFER_TOKEN          = 2

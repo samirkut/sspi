@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
+//go:build windows
 // +build windows
 
 package sspi
@@ -125,12 +126,12 @@ func NewServerContext(cred *Credentials, flags uint32) *Context {
 
 func initialize(c *Context, targname *uint16, h, newh *CtxtHandle, out, in *SecBufferDesc) syscall.Errno {
 	return InitializeSecurityContext(&c.Cred.Handle, h, targname, c.RequestedFlags,
-		0, SECURITY_NATIVE_DREP, in, 0, newh, out, &c.EstablishedFlags, &c.expiry)
+		0, SECURITY_NETWORK_DREP, in, 0, newh, out, &c.EstablishedFlags, &c.expiry)
 }
 
 func accept(c *Context, targname *uint16, h, newh *CtxtHandle, out, in *SecBufferDesc) syscall.Errno {
 	return AcceptSecurityContext(&c.Cred.Handle, h, in, c.RequestedFlags,
-		SECURITY_NATIVE_DREP, newh, out, &c.EstablishedFlags, &c.expiry)
+		SECURITY_NETWORK_DREP, newh, out, &c.EstablishedFlags, &c.expiry)
 }
 
 func (c *Context) Update(targname *uint16, out, in *SecBufferDesc) syscall.Errno {
